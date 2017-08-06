@@ -26,7 +26,7 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    //Action
+    //Pin Location
     func pinLocation(sender: UILongPressGestureRecognizer) {
         if sender.state != .ended {
             return
@@ -45,6 +45,18 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         annotations.append(annotation)
         mapView.showAnnotations([annotation], animated: true)
     }
+    
+    //Action
+    @IBAction func drawPolyline() {
+        mapView.removeOverlays(mapView.overlays)
+        var coordinates = [CLLocationCoordinate2D]()
+        for annotation in annotations {
+            coordinates.append(annotation.coordinate)
+            let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
+            mapView.add(polyline)
+        }
+    }
+    
 
     //MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
@@ -54,6 +66,14 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         UIView.animate(withDuration: 0.3) {
             annotationView.frame = endFrame
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let render = MKPolylineRenderer(overlay: overlay)
+        render.lineWidth = 3.0
+        render.strokeColor = .purple
+        render.alpha = 0.5
+        return render
     }
 }
 

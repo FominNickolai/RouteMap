@@ -46,6 +46,34 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         mapView.showAnnotations([annotation], animated: true)
     }
     
+    //Computing the direction between first and second points
+    func drawDirection(startPoint: CLLocationCoordinate2D, endPoint: CLLocationCoordinate2D) {
+        //Create map items from coordinate
+        let startPlacemark = MKPlacemark(coordinate: startPoint, addressDictionary: nil)
+        let endPlacemark = MKPlacemark(coordinate: endPoint, addressDictionary: nil)
+        let startMapItem = MKMapItem(placemark: startPlacemark)
+        let endMapItem = MKMapItem(placemark: endPlacemark)
+        
+        //Set the source and desctination of the route
+        let directionRequest = MKDirectionsRequest()
+        directionRequest.source = startMapItem
+        directionRequest.destination = endMapItem
+        directionRequest.transportType = .automobile
+        
+        //Calculate the direction
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate { (routeResponse, routeError) in
+            guard let routeResponse = routeResponse else {
+                if let routeError = routeError {
+                    print("Error: \(routeError)")
+                }
+                return
+            }
+            let route = routeResponse.routes[0]
+            self.mapView.add(route.polyline, level: MKOverlayLevel.aboveRoads)
+        }
+    }
+    
     //Action
     @IBAction func drawPolyline() {
         mapView.removeOverlays(mapView.overlays)

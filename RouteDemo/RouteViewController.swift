@@ -13,16 +13,35 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet var mapView: MKMapView!
     
+    private var annotations = [MKPointAnnotation]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        let longpressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(pinLocation(sender:)))
+        longpressGestureRecognizer.minimumPressDuration = 0.3
+        mapView.addGestureRecognizer(longpressGestureRecognizer)
+        
     }
     
+    //Action
+    func pinLocation(sender: UILongPressGestureRecognizer) {
+        if sender.state != .ended {
+            return
+        }
+        
+        //Get the location of the touch
+        let tappedPoint = sender.location(in: mapView)
+        //Convert point to coordinate
+        let tappedCoordinate = mapView.convert(tappedPoint, toCoordinateFrom: mapView)
+        
+        //Annotate on the map view
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = tappedCoordinate
+        
+        //Store the annotation for later use
+        annotations.append(annotation)
+        mapView.showAnnotations([annotation], animated: true)
+    }
 
 }

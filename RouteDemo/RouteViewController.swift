@@ -92,6 +92,10 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
             coordinates.append(annotation.coordinate)
         }
         
+        let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
+        let visibleMapRect = mapView.mapRectThatFits(polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50))
+        self.mapView.setRegion(MKCoordinateRegionForMapRect(visibleMapRect), animated: true)
+        
         var index = 0
         while index < (annotations.count - 1) {
             drawDirection(startPoint: annotations[index].coordinate, endPoint: annotations[index + 1].coordinate)

@@ -73,6 +73,9 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         render.lineWidth = 3.0
         render.strokeColor = .purple
         render.alpha = 0.5
+        let visibleMapRect = mapView.mapRectThatFits(render.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50))
+        mapView.setRegion(MKCoordinateRegionForMapRect(visibleMapRect), animated: true)
+        
         return render
     }
 }

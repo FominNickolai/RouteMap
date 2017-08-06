@@ -18,6 +18,8 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.delegate = self
+        
         let longpressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(pinLocation(sender:)))
         longpressGestureRecognizer.minimumPressDuration = 0.3
         mapView.addGestureRecognizer(longpressGestureRecognizer)
@@ -44,4 +46,39 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         mapView.showAnnotations([annotation], animated: true)
     }
 
+    //MARK: - MKMapViewDelegate
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        let annotationView = views[0]
+        let endFrame = annotationView.frame
+        annotationView.frame = endFrame.offsetBy(dx: 0, dy: -600)
+        UIView.animate(withDuration: 0.3) {
+            annotationView.frame = endFrame
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

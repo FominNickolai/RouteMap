@@ -85,6 +85,19 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    @IBAction func drawRoute() {
+        mapView.removeOverlays(mapView.overlays)
+        var coordinates = [CLLocationCoordinate2D]()
+        for annotation in annotations {
+            coordinates.append(annotation.coordinate)
+        }
+        
+        var index = 0
+        while index < (annotations.count - 1) {
+            drawDirection(startPoint: annotations[index].coordinate, endPoint: annotations[index + 1].coordinate)
+            index += 1
+        }
+    }
 
     //MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {

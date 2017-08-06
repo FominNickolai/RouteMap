@@ -37,7 +37,11 @@
                     <navigationItem key="navigationItem" title="Route Demo" id="2gr-Ut-RHt">
                         <barButtonItem key="leftBarButtonItem" title="Clear" id="LvR-BC-2jL"/>
                         <rightBarButtonItems>
-                            <barButtonItem title="Routes" id="io4-Fq-zbe"/>
+                            <barButtonItem title="Routes" id="io4-Fq-zbe">
+                                <connections>
+                                    <action selector="drawRoute" destination="xMI-fs-bW1" id="FMA-59-Ly2"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Lines" id="aMI-lx-3Ta">
                                 <connections>
                                     <action selector="drawPolyline" destination="xMI-fs-bW1" id="qps-7q-vnV"/>

@@ -35,7 +35,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Route Demo" id="2gr-Ut-RHt">
-                        <barButtonItem key="leftBarButtonItem" title="Clear" id="LvR-BC-2jL"/>
+                        <barButtonItem key="leftBarButtonItem" title="Clear" id="LvR-BC-2jL">
+                            <connections>
+                                <action selector="removeAnnotations" destination="xMI-fs-bW1" id="omP-rE-7OS"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Routes" id="io4-Fq-zbe">
                                 <connections>

@@ -102,6 +102,15 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
             index += 1
         }
     }
+    
+    @IBAction func removeAnnotations() {
+        //Remove annotations and overlays
+        mapView.removeOverlays(mapView.overlays)
+        mapView.removeAnnotations(annotations)
+        
+        //Clear the annotation array
+        annotations.removeAll()
+    }
 
     //MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
